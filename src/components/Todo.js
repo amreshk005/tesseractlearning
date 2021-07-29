@@ -32,14 +32,12 @@ function Todo(props) {
       setSelectedItem(selectedItem.filter((e) => e !== id));
     }
   };
-  console.log(selectedItem);
   const handleDelete = () => {
     let updatedTodo = props.todos.filter((e) => !selectedItem.includes(e.id));
     updatedTodo.map((e, index) => ({ ...e, id: index }));
     props.deleteTodo(updatedTodo);
     setSelectedItem([]);
   };
-  console.log(selectedItem);
   return (
     <div className={style.container}>
       <form onSubmit={handleSubmit}>
@@ -50,28 +48,31 @@ function Todo(props) {
       </form>
       <div>
         <table className={style.todotable}>
-          <tr>
-            <th></th>
-            <th>My Todo's</th>
-            <th>Status</th>
-          </tr>
-          {props.todos.map((e) => {
-            return (
-              <tr>
-                <td>
-                  <input type="checkbox" name="id" checked={selectedItem.includes(e.id)} onClick={() => handleCheckbox(e.id)} />
-                </td>
-                <td>
-                  <Link to={{ pathname: `${e.title}`, state: { ...e } }}>{e.title}</Link>
-                </td>
-                <td>
-                  <button className={`${style.statusbtn} ${style.btn}`} onClick={() => handleUpdate(e.id)}>
-                    {e.completed ? "Completed" : "uncomplete"}
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
+          <tbody>
+            <tr>
+              <th></th>
+              <th>My Todo's</th>
+              <th>Status</th>
+            </tr>
+            {props.todos.map((e, index) => {
+              return (
+                //here we can uuid library for key but that need to install a library, so currently i'm writing like this
+                <tr key={`${Date.now()} + ${index}`}>
+                  <td>
+                    <input type="checkbox" defaultChecked={selectedItem.includes(e.id)} onClick={() => handleCheckbox(e.id)} />
+                  </td>
+                  <td>
+                    <Link to={{ pathname: `${e.title}`, state: { ...e } }}>{e.title}</Link>
+                  </td>
+                  <td>
+                    <button className={`${style.statusbtn} ${style.btn}`} onClick={() => handleUpdate(e.id)}>
+                      {e.completed ? "Completed" : "uncomplete"}
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
         <div className={style.deleteContainer}>
           <button className={`${style.deletebtn} ${style.btn}`} onClick={handleDelete}>

@@ -12,10 +12,8 @@ function Tododetail(props) {
     description: "",
   });
 
-  console.log(history);
   useEffect(() => {
     if (history.location.state) {
-      console.log(history);
       let { id, title, description } = history.location.state;
       setInput({
         id: id,
@@ -51,7 +49,7 @@ function Tododetail(props) {
   };
   return (
     <div className={style.container}>
-      <form>
+      <form className={style.form}>
         <label className={style.label}>Name</label> <br />
         <input className={style.input} type="text" name="title" value={input.title} onChange={handleInput} />
         <br />

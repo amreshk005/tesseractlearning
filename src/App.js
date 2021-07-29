@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
 import "./App.css";
 import Todo from "./components/Todo";
 import Tododetail from "./components/Tododetail";
